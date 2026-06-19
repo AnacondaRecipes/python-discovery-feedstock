@@ -27,7 +27,7 @@ requirements:
 
 test:
   imports:
-    - python >=3.8_discovery
+    - python_discovery
   commands:
     - pip check
   requires:
