@@ -1,0 +1,53 @@
+{% set name = "python-discovery" %}
+{% set version = "1.4.2" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/python_discovery-{{ version }}.tar.gz
+  sha256: 8f3746c4b4968d22afbb97d36e1a0e5b66e6c0f297290f2e95f05b9b8bf18690
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+
+requirements:
+  host:
+    - python >=3.8
+    - hatch-vcs >=0.5
+    - hatchling >=1.28
+    - pip
+  run:
+    - python >=3.8
+    - filelock >=3.15.4
+    - platformdirs >=4.3.6,<5
+
+test:
+  imports:
+    - python_discovery
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/tox-dev/python-discovery
+  summary: Python interpreter discovery
+  description: |
+    Python interpreter discovery locates Python interpreters installed on a system
+    from various sources such as system packages, pyenv, mise, asdf, uv, or the
+    Windows registry.
+  license: MIT
+  license_family: MIT
+  license_file: LICENSE
+  doc_url: https://python-discovery.readthedocs.io
+  dev_url: https://github.com/tox-dev/python-discovery
+
+extra:
+  recipe-maintainers:
+    - AnacondaRecipes/recipe-maintainers
+  skip-lints:
+    - avoid_noarch
