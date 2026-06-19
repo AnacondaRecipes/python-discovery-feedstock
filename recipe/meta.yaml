@@ -41,6 +41,7 @@ about:
     from various sources such as system packages, pyenv, mise, asdf, uv, or the
     Windows registry.
   license: MIT
+  license_family: MIT
   license_file: LICENSE
   doc_url: https://python-discovery.readthedocs.io
   dev_url: https://github.com/tox-dev/python-discovery
