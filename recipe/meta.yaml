@@ -11,7 +11,7 @@ source:
 
 build:
   number: 0
-  noarch: generic
+  noarch: python
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
@@ -27,7 +27,7 @@ requirements:
 
 test:
   imports:
-    - python_discovery
+    - python >=3.8_discovery
   commands:
     - pip check
   requires:
@@ -49,3 +49,5 @@ about:
 extra:
   recipe-maintainers:
     - AnacondaRecipes/recipe-maintainers
+  skip-lints:
+    - avoid_noarch
