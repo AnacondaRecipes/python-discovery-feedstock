@@ -36,6 +36,10 @@ test:
 about:
   home: https://github.com/tox-dev/python-discovery
   summary: Python interpreter discovery
+  description: |
+    Python interpreter discovery locates Python interpreters installed on a system
+    from various sources such as system packages, pyenv, mise, asdf, uv, or the
+    Windows registry.
   license: MIT
   license_file: LICENSE
   doc_url: https://python-discovery.readthedocs.io
