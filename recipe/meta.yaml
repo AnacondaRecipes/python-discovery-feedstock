@@ -1,37 +1,53 @@
 {% set name = "python-discovery" %}
-{% set version = "1.4.2" %}
+{% set version = "1.6.1" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/python_discovery-{{ version }}.tar.gz
-  sha256: 8f3746c4b4968d22afbb97d36e1a0e5b66e6c0f297290f2e95f05b9b8bf18690
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace("-", "_") }}-{{ version }}.tar.gz
+  sha256: cf87d3627dfb4412437fdd5b13eae402607722998d21567993aedbc59b23c15e
 
 build:
   number: 0
-  noarch: python
+  skip: true # [py<38]
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
-    - python >=3.8
+    - python
     - hatch-vcs >=0.5
     - hatchling >=1.28
     - pip
   run:
-    - python >=3.8
+    - python
     - filelock >=3.15.4
-    - platformdirs >=4.3.6,<5
 
+{% set deselected_tests_win = [
+  "--deselect=tests/windows/test_windows.py::test_propose_interpreters",
+  "--deselect=tests/windows/test_windows_pep514.py::test_pep514_run",
+  "--deselect=tests/test_discovery.py::test_discovery_uv_store_is_searched_after_path",
+  "--deselect=tests/test_py_info_extra.py::test_satisfies_abs_spec_path_falls_through",
+  "--deselect=tests/test_discovery.py::test_discovery_via_path",
+  "--deselect=tests/test_discovery_extra.py::test_propose_interpreters_relative_spec_is_abs"
+]%}
 test:
+  source_files:
+    - tests
   imports:
     - python_discovery
   commands:
     - pip check
+    # E ModuleNotFoundError: No module named 'vermin'
+    - pytest -vv --ignore=tests/test_py_info_collect.py # [unix]
+    - pytest -vv --ignore=tests/test_py_info_collect.py {{ deselected_tests_win | join(' ') }} # [win]
   requires:
     - pip
+    - coverage >=7.5.4
+    - pytest >=8.3.5
+    - pytest-mock >=3.14
+    - setuptools >=75.1
 
 about:
   home: https://github.com/tox-dev/python-discovery
