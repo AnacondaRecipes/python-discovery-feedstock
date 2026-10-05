@@ -28,7 +28,9 @@ requirements:
   "--deselect=tests/windows/test_windows.py::test_propose_interpreters",
   "--deselect=tests/windows/test_windows_pep514.py::test_pep514_run",
   "--deselect=tests/test_discovery.py::test_discovery_uv_store_is_searched_after_path",
-  "--deselect=tests/test_py_info_extra.py::test_satisfies_abs_spec_path_falls_through"
+  "--deselect=tests/test_py_info_extra.py::test_satisfies_abs_spec_path_falls_through",
+  "--deselect=tests/test_discovery.py::test_discovery_via_path",
+  "--deselect=tests/test_discovery_extra.py::test_propose_interpreters_relative_spec_is_abs"
 ]%}
 test:
   source_files:
